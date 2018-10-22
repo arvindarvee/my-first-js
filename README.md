@@ -1,1 +1,1 @@
-# my-first-js
+# my-first-js project - random color boxes
