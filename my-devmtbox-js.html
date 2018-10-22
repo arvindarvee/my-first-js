@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Practical JavaScript - Logic to Manipulate the DOM</title>
+	<style>
+
+		body {
+			font-family: sans-serif;
+		}
+
+		#container {
+			width: 80%;
+			margin: 0 auto;
+		}
+
+		#box-container {
+			display: block;
+			margin-top: 30px;
+		}
+
+		#number-input {
+			font-size: 1.3em;
+		}
+
+		#submit-button {
+			border: 1px solid gray;
+			color: gray;
+			background-color: white;
+			cursor: pointer;
+			font-size: 1.3em;
+		}
+
+		#submit-button:hover {
+			color: white;
+			background-color: gray;
+		}
+
+		.box {
+			width: 32%;
+			height: 200px;
+			background-color: gray;
+			border: 1px solid white;
+			display: inline-block;
+		}
+
+	</style>
+</head>
+
+<body>
+	<div id="container">
+		<h1> Enter a 6 digit number to change the color of the boxes </h1>
+		<ul>
+			<li> Even Digits Should turn a box light blue. </li>
+			<li> A Zero should turn the box red </li>
+			<li> A three or a 7 should turn the box green </li>
+			<li> A five should turn the box orange </li>
+			<li>A nine should turn the box either yellow or turquoise (randomly).</li>
+		</ul>
+
+		<input id="number-input" type="text" placeholder="Enter Number Here...">
+		<button id="submit-button"> Click to Submit Number !</button>
+
+		<div id="box-container">
+			<div class="box" id="box0"></div>
+			<div class="box" id="box1"></div>
+			<div class="box" id="box2"></div>
+
+			<div class="box" id="box3"></div>
+			<div class="box" id="box4"></div>
+			<div class="box" id="box5"></div>
+		</div>
+
+	</div>
+
+    <script>
+        //creating a variable for the button and input box
+        var button = document.getElementById("submit-button");
+        var input = document.getElementById("number-input");
+
+		// var box0 = document.getElementById("box0");
+		// var box1 = document.getElementById("box1");
+		// var box2 = document.getElementById("box2");
+		// var box3 = document.getElementById("box3");
+		// var box4 = document.getElementById("box4");
+		// var box5 = document.getElementById("box5");
+
+		var turquoise = "#047878",
+			green = "#08B90B",
+			orange = "#F57336",
+			lightBlue = "#ACF0F2",
+			red = "#C22121",
+			yellow = "#FFB733",
+			black = "#000000";
+
+
+        button.addEventListener("click",function(){
+            var submittedNumber = input.value;
+            var numberArray = submittedNumber.split("").map(Number);
+            checkDigits(numberArray);
+        });
+
+		function checkDigits(inputArray){
+			if(inputArray.length !== 6){
+				alert("Please Enter exactly 6 digits")
+			}else{
+				changeBoxColors(inputArray);
+			}
+		;}
+
+		function changeBoxColors(array){
+			console.log("thats all working", array);
+
+			for (var i = 0;i < array.length;i++){
+
+				var plainBox = "box";
+				var num = i.toString();
+				var toEdit = plainBox.concat(num);
+				console.log("this is toEdit", toEdit);
+
+				if(array[i] === 0){
+					document.getElementById(toEdit).style.backgroundColor = red;
+				}
+				if(array[i] % 2 === 0){
+					document.getElementById(toEdit).style.backgroundColor = lightBlue;
+				}
+				if(array[i] === 3 || array[i] === 7){
+					document.getElementById(toEdit).style.backgroundColor = green;
+				}
+				if(array[i] === 5){
+					document.getElementById(toEdit).style.backgroundColor = orange;
+				}
+				if(array[i] === 9){
+					document.getElementById(toEdit).style.backgroundColor = getRandomColor();
+				}
+			}
+		};
+
+		function getRandomColor(){
+			var randomNumber = Math.random();
+			var roundedNumber = Math.round(randomNumber);
+			if(roundedNumber === 1){
+				return turquoise;
+			}else{
+				return yellow;
+			}
+		}
+
+    </script>
+</body>
